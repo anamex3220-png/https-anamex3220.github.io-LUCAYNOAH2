@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bautizo Luca & Noah 🐻🦁</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Quicksand:wght@500;600;700&display=swap');
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: radial-gradient(ellipse at 60% 30%, #ffe8d6 0%, #ffd6b3 40%, #f5c8a0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: 'Quicksand', sans-serif;
+  overflow: hidden;
+}
+
+#scene {
+  width: 420px;
+  height: 700px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 32px;
+  box-shadow:
+    0 0 0 4px #fff,
+    0 0 0 8px #f5c8a0,
+    0 30px 80px rgba(180,100,60,0.3);
+}
+
+/* SLIDES */
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1);
+  cursor: pointer;
+}
+.slide.active { opacity:1; pointer-events:all; }
+
+/* ===================== SLIDE 1 - PORTADA ===================== */
+#s1 {
+  background: linear-gradient(180deg, #87CEEB 0%, #b8e4f9 35%, #d4f1c4 65%, #a8d8a8 100%);
+  overflow: hidden;
+}
+.s1-grass {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 120px;
+}
+.s1-clouds { position: absolute; top: 0; left: 0; right: 0; height: 100%; pointer-events:none; }
+.cloud {
+  position: absolute;
+  background: white;
+  border-radius: 50px;
+  opacity: 0.85;
+  filter: blur(1px);
+}
+.cloud::before, .cloud::after {
+  content:'';
+  position:absolute;
+  background:white;
+  border-radius:50%;
+}
+.c1 { width:90px; height:30px; top:8%; left:5%; animation: cloudDrift 18s linear infinite; }
+.c1::before { width:45px; height:45px; top:-22px; left:12px; }
+.c1::after { width:35px; height:35px; top:-16px; left:36px; }
+.c2 { width:70px; height:24px; top:16%; right:8%; animation: cloudDrift 22s linear 3s infinite reverse; }
+.c2::before { width:36px; height:36px; top:-18px; left:8px; }
+.c2::after { width:28px; height:28px; top:-13px; left:28px; }
+.c3 { width:60px; height:20px; top:28%; left:60%; animation: cloudDrift 25s linear 6s infinite; }
+.c3::before { width:30px; height:30px; top:-15px; left:6px; }
+.c3::after { width:24px; height:24px; top:-11px; left:24px; }
+
+.s1-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+}
+.s1-animals-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: -10px;
+  animation: floatSoft 4s ease-in-out infinite;
+}
+.title-cloud {
+  background: rgba(255,255,255,0.92);
+  border-radius: 28px;
+  padding: 18px 30px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  animation: popIn 0.8s 0.3s both;
+  border: 2px solid rgba(255,255,255,0.8);
+}
+.title-cloud h1 {
+  font-family: 'Baloo 2', cursive;
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #e8956d, #d4643a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+.title-cloud .names {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #7ab648;
+  margin-top: 4px;
+}
+.title-cloud .subtitle {
+  color: #b07a5a;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-top: 6px;
+}
+.tap-hint {
+  color: rgba(120,80,50,0.7);
+  font-size: 0.8rem;
+  font-weight: 700;
+  animation: pulse 2s infinite;
+  margin-top: 12px;
+  letter-spacing: 0.5px;
+}
+/* grass svg bottom */
+.grass-strip {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 80px;
+}
+/* little flowers */
+.flower {
+  position: absolute;
+  bottom: 60px;
+  font-size: 1.4rem;
+  animation: sway 3s ease-in-out infinite;
+}
+.flower:nth-child(1) { left:5%; animation-delay:0s; }
+.flower:nth-child(2) { left:20%; animation-delay:0.5s; }
+.flower:nth-child(3) { right:18%; animation-delay:1s; }
+.flower:nth-child(4) { right:5%; animation-delay:0.3s; }
+.flower:nth-child(5) { left:40%; animation-delay:0.8s; bottom:55px; font-size:1rem; }
+
+/* butterflies */
+.butterfly {
+  position: absolute;
+  font-size: 1.1rem;
+  animation: flutter 4s ease-in-out infinite;
+}
+.bf1 { top:40%; left:8%; animation-delay:0s; }
+.bf2 { top:52%; right:7%; animation-delay:2s; }
+
+/* ===================== SLIDE 2 - BEBÉS ===================== */
+#s2 {
+  background: linear-gradient(180deg, #fef9f0 0%, #fff5e6 50%, #fde8cc 100%);
+}
+.s2-header {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #e8956d;
+  text-align: center;
+  margin-bottom: 8px;
+  animation: popIn 0.6s 0.1s both;
+}
+.babies-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.baby-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.speech {
+  background: white;
+  border-radius: 18px;
+  padding: 8px 13px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #7a4a2a;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.09);
+  text-align: center;
+  max-width: 138px;
+  line-height: 1.35;
+  position: relative;
+  border: 1.5px solid #ffe4cc;
+}
+.speech::after {
+  content:'';
+  position:absolute;
+  bottom:-10px;
+  left:50%;
+  transform:translateX(-50%);
+  border:10px solid transparent;
+  border-top-color:white;
+  border-bottom:0;
+}
+.baby-card:nth-child(1) .baby-svg { animation: floatSoft 3.5s ease-in-out infinite; }
+.baby-card:nth-child(2) .baby-svg { animation: floatSoft 3.5s ease-in-out 0.8s infinite; }
+.baby-svg { width:148px; height:165px; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.13)); }
+.name-tag {
+  background: linear-gradient(135deg, #f5a97a, #e8956d);
+  color: white;
+  font-family: 'Baloo 2', cursive;
+  font-size: 0.9rem;
+  font-weight: 800;
+  padding: 4px 16px;
+  border-radius: 20px;
+  box-shadow: 0 3px 10px rgba(232,149,109,0.4);
+  letter-spacing: 0.5px;
+}
+.s2-footer {
+  text-align: center;
+  animation: slideUp 0.6s 0.6s both;
+}
+.s2-footer h2 {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #7ab648;
+}
+.emoji-strip { font-size: 1.5rem; letter-spacing: 5px; margin-top: 5px; }
+
+/* leaf decorations */
+.leaf { position: absolute; font-size: 1.3rem; opacity: 0.5; animation: sway 4s ease-in-out infinite; }
+.leaf:nth-child(1) { top:5%; left:3%; }
+.leaf:nth-child(2) { top:8%; right:4%; animation-delay:1s; }
+.leaf:nth-child(3) { bottom:10%; left:5%; animation-delay:2s; }
+.leaf:nth-child(4) { bottom:8%; right:3%; animation-delay:0.5s; }
+
+/* ===================== SLIDE 3 - DETALLES ===================== */
+#s3 {
+  background: linear-gradient(180deg, #f0fae8 0%, #e8f5d8 100%);
+}
+.invite-card {
+  background: white;
+  border-radius: 26px;
+  padding: 26px 22px 20px;
+  width: 372px;
+  box-shadow: 0 12px 50px rgba(0,0,0,0.1);
+  border: 2px solid #e8f5d8;
+  animation: slideUp 0.7s 0.2s both;
+  position: relative;
+}
+.card-top-deco {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3.2rem;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+}
+.invite-card h2 {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #7ab648;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.info-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border-radius: 16px;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #f8fffe, #f0fae8);
+  border-left: 4px solid #7ab648;
+}
+.info-item:nth-child(3) { border-left-color: #f5a97a; background: linear-gradient(135deg, #fffaf5, #fff0e8); }
+.info-item:nth-child(4) { border-left-color: #87CEEB; background: linear-gradient(135deg, #f5faff, #e8f4fd); }
+.ii-icon { font-size: 1.7rem; flex-shrink: 0; }
+.ii-text strong {
+  display: block;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #9ab888;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.ii-text { font-size: 0.87rem; color: #444; line-height: 1.45; font-weight: 600; }
+.cta-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #7ab648, #5a9630);
+  color: white;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.05rem;
+  font-weight: 800;
+  padding: 13px;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  margin-top: 6px;
+  box-shadow: 0 5px 20px rgba(122,182,72,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: pulse 2.2s infinite;
+  letter-spacing: 0.5px;
+}
+.cta-btn:hover { transform:scale(1.04); box-shadow: 0 8px 28px rgba(122,182,72,0.5); }
+
+/* ===================== SLIDE 4 - FINAL ===================== */
+#s4 {
+  background: linear-gradient(160deg, #fff9f0 0%, #fef0e0 50%, #fde8cc 100%);
+  overflow: hidden;
+}
+.final-wrap { position:relative; z-index:2; text-align:center; display:flex; flex-direction:column; align-items:center; }
+.final-animals { font-size:3.5rem; animation: floatSoft 3s ease-in-out infinite; margin-bottom:10px; filter:drop-shadow(0 6px 12px rgba(0,0,0,0.12)); }
+.final-wrap h1 {
+  font-family: 'Baloo 2', cursive;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #e8956d;
+  line-height: 1.15;
+  animation: popIn 0.7s both;
+}
+.final-wrap .names-big {
+  font-family: 'Baloo 2', cursive;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #7ab648;
+  animation: popIn 0.7s 0.15s both;
+}
+.final-wrap .message {
+  color: #b07a5a;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 8px;
+  animation: popIn 0.7s 0.3s both;
+  line-height: 1.5;
+}
+.final-details {
+  margin-top: 14px;
+  background: white;
+  border-radius: 16px;
+  padding: 12px 20px;
+  font-size: 0.8rem;
+  color: #888;
+  font-weight: 600;
+  line-height: 1.8;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  animation: popIn 0.6s 0.4s both;
+}
+.hearts-row { font-size:1.8rem; margin-top:12px; animation: pulse 1.8s infinite; }
+
+/* confetti */
+#confetti-box { position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:1; }
+.cp {
+  position:absolute;
+  animation: fall linear infinite;
+  border-radius: 3px;
+}
+
+/* ===================== NAV ===================== */
+#nav {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 300;
+}
+.dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: rgba(180,120,80,0.25);
+  border: 2px solid rgba(180,120,80,0.4);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.dot.on { background: #e8956d; transform:scale(1.5); border-color: #e8956d; }
+#nxt-btn {
+  position: absolute;
+  bottom: 13px;
+  right: 14px;
+  background: rgba(255,255,255,0.7);
+  border: 1.5px solid rgba(180,120,80,0.3);
+  color: #b07a5a;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  z-index: 300;
+  transition: all 0.3s;
+  backdrop-filter: blur(4px);
+}
+#nxt-btn:hover { background: rgba(255,255,255,0.9); }
+
+/* ===================== ANIMATIONS ===================== */
+@keyframes popIn {
+  0% { transform:scale(0.4); opacity:0; }
+  75% { transform:scale(1.06); }
+  100% { transform:scale(1); opacity:1; }
+}
+@keyframes slideUp {
+  0% { transform:translateY(55px); opacity:0; }
+  100% { transform:translateY(0); opacity:1; }
+}
+@keyframes floatSoft {
+  0%,100% { transform:translateY(0px); }
+  50% { transform:translateY(-12px); }
+}
+@keyframes pulse {
+  0%,100% { transform:scale(1); }
+  50% { transform:scale(1.04); }
+}
+@keyframes sway {
+  0%,100% { transform:rotate(-5deg); }
+  50% { transform:rotate(5deg); }
+}
+@keyframes cloudDrift {
+  0% { transform:translateX(-120px); }
+  100% { transform:translateX(480px); }
+}
+@keyframes flutter {
+  0%,100% { transform:translateX(0) translateY(0) rotate(0deg); }
+  25% { transform:translateX(8px) translateY(-10px) rotate(8deg); }
+  50% { transform:translateX(0) translateY(-18px) rotate(0deg); }
+  75% { transform:translateX(-8px) translateY(-10px) rotate(-8deg); }
+}
+@keyframes twinkle {
+  0% { opacity:0.4; transform:scale(0.8); }
+  100% { opacity:1; transform:scale(1.2); }
+}
+@keyframes fall {
+  0% { top:-30px; opacity:1; transform:rotate(0deg) translateX(0); }
+  100% { top:110%; opacity:0; transform:rotate(720deg) translateX(var(--dx)); }
+}
+</style>
+</head>
+<body>
+<div id="scene">
+
+<!-- =========== SLIDE 1 =========== -->
+<div class="slide active" id="s1">
+  <div class="s1-clouds">
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+  </div>
+
+  <!-- Flores y mariposas -->
+  <span class="flower">🌸</span>
+  <span class="flower">🌼</span>
+  <span class="flower">🌺</span>
+  <span class="flower">🌻</span>
+  <span class="flower">🌷</span>
+  <span class="butterfly bf1">🦋</span>
+  <span class="butterfly bf2">🦋</span>
+
+  <!-- Césped SVG -->
+  <svg class="grass-strip" viewBox="0 0 420 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="position:absolute;bottom:0;left:0;right:0;">
+    <ellipse cx="0" cy="80" rx="60" ry="30" fill="#7ab648"/>
+    <ellipse cx="60" cy="80" rx="80" ry="35" fill="#8dc63f"/>
+    <ellipse cx="160" cy="80" rx="90" ry="32" fill="#7ab648"/>
+    <ellipse cx="280" cy="80" rx="80" ry="36" fill="#8dc63f"/>
+    <ellipse cx="380" cy="80" rx="70" ry="30" fill="#7ab648"/>
+    <ellipse cx="420" cy="80" rx="60" ry="28" fill="#8dc63f"/>
+    <rect x="0" y="65" width="420" height="20" fill="#7ab648"/>
+  </svg>
+
+  <div class="s1-content">
+    <!-- Animalitos encima del título -->
+    <div class="s1-animals-row">
+      <!-- Oso bebé Luca -->
+      <svg width="110" height="125" viewBox="0 0 110 125" xmlns="http://www.w3.org/2000/svg">
+        <!-- cuerpo oso -->
+        <ellipse cx="55" cy="102" rx="32" ry="22" fill="#d4956a"/>
+        <!-- pancita -->
+        <ellipse cx="55" cy="104" rx="20" ry="14" fill="#f5dcc0"/>
+        <!-- cabeza -->
+        <ellipse cx="55" cy="64" rx="34" ry="32" fill="#d4956a"/>
+        <!-- orejitas oso -->
+        <circle cx="24" cy="36" r="12" fill="#d4956a"/>
+        <circle cx="24" cy="36" r="7" fill="#c07a50"/>
+        <circle cx="86" cy="36" r="12" fill="#d4956a"/>
+        <circle cx="86" cy="36" r="7" fill="#c07a50"/>
+        <!-- cara bebé Disney -->
+        <!-- cachetes rosados -->
+        <ellipse cx="36" cy="72" rx="10" ry="7" fill="#FFB3C6" opacity="0.7"/>
+        <ellipse cx="74" cy="72" rx="10" ry="7" fill="#FFB3C6" opacity="0.7"/>
+        <!-- ojos grandes Disney -->
+        <ellipse cx="44" cy="60" rx="11" ry="13" fill="white"/>
+        <ellipse cx="66" cy="60" rx="11" ry="13" fill="white"/>
+        <!-- iris caramel -->
+        <ellipse cx="44" cy="62" rx="7.5" ry="9" fill="#7a4a1a"/>
+        <ellipse cx="66" cy="62" rx="7.5" ry="9" fill="#7a4a1a"/>
+        <!-- pupila -->
+        <ellipse cx="44" cy="63" rx="4.5" ry="5.5" fill="#1a0a00"/>
+        <ellipse cx="66" cy="63" rx="4.5" ry="5.5" fill="#1a0a00"/>
+        <!-- brillo ojo -->
+        <circle cx="47" cy="59" r="2.5" fill="white"/>
+        <circle cx="69" cy="59" r="2.5" fill="white"/>
+        <circle cx="42" cy="64" r="1.2" fill="white" opacity="0.7"/>
+        <circle cx="64" cy="64" r="1.2" fill="white" opacity="0.7"/>
+        <!-- cejas suaves -->
+        <path d="M34 49 Q44 45 53 49" stroke="#8B5A2B" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M57 49 Q66 45 76 49" stroke="#8B5A2B" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <!-- naricita oso -->
+        <ellipse cx="55" cy="72" rx="7" ry="5" fill="#5a2d0c"/>
+        <ellipse cx="55" cy="71" rx="4" ry="2.5" fill="#7a4a2a" opacity="0.5"/>
+        <!-- boca sonrisa Disney -->
+        <path d="M46 79 Q55 87 64 79" stroke="#8B5A2B" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- pata con flor -->
+        <ellipse cx="38" cy="116" rx="14" ry="10" fill="#c07a50"/>
+        <ellipse cx="72" cy="116" rx="14" ry="10" fill="#c07a50"/>
+        <!-- florcita en mano -->
+        <circle cx="26" cy="108" r="6" fill="#FFB3C6"/>
+        <circle cx="26" cy="108" r="3" fill="#FFD700"/>
+        <line x1="26" y1="114" x2="26" y2="122" stroke="#7ab648" stroke-width="2"/>
+      </svg>
+
+      <!-- Leoncito Noah -->
+      <svg width="110" height="125" viewBox="0 0 110 125" xmlns="http://www.w3.org/2000/svg">
+        <!-- melena leo suave -->
+        <circle cx="55" cy="62" r="40" fill="#e8a84a"/>
+        <!-- puntas melena -->
+        <ellipse cx="20" cy="42" rx="12" ry="16" fill="#e8a84a"/>
+        <ellipse cx="90" cy="42" rx="12" ry="16" fill="#e8a84a"/>
+        <ellipse cx="10" cy="65" rx="10" ry="13" fill="#dfa040"/>
+        <ellipse cx="100" cy="65" rx="10" ry="13" fill="#dfa040"/>
+        <ellipse cx="22" cy="86" rx="11" ry="12" fill="#e8a84a"/>
+        <ellipse cx="88" cy="86" rx="11" ry="12" fill="#e8a84a"/>
+        <ellipse cx="40" cy="24" rx="10" ry="12" fill="#dfa040"/>
+        <ellipse cx="70" cy="24" rx="10" ry="12" fill="#dfa040"/>
+        <ellipse cx="55" cy="18" rx="9" ry="11" fill="#e8a84a"/>
+        <!-- cabeza cara -->
+        <ellipse cx="55" cy="65" rx="30" ry="30" fill="#f5c87a"/>
+        <!-- cuerpo debajo -->
+        <ellipse cx="55" cy="104" rx="26" ry="20" fill="#f5c87a"/>
+        <ellipse cx="55" cy="106" rx="16" ry="12" fill="#fde8b0"/>
+        <!-- cachetes rosados -->
+        <ellipse cx="36" cy="74" rx="9" ry="6.5" fill="#FFB3C6" opacity="0.65"/>
+        <ellipse cx="74" cy="74" rx="9" ry="6.5" fill="#FFB3C6" opacity="0.65"/>
+        <!-- ojos grandes Disney -->
+        <ellipse cx="44" cy="60" rx="11" ry="13" fill="white"/>
+        <ellipse cx="66" cy="60" rx="11" ry="13" fill="white"/>
+        <ellipse cx="44" cy="62" rx="7.5" ry="9" fill="#5a3200"/>
+        <ellipse cx="66" cy="62" rx="7.5" ry="9" fill="#5a3200"/>
+        <ellipse cx="44" cy="63" rx="4.5" ry="5.5" fill="#0d0500"/>
+        <ellipse cx="66" cy="63" rx="4.5" ry="5.5" fill="#0d0500"/>
+        <circle cx="47" cy="58" r="2.5" fill="white"/>
+        <circle cx="69" cy="58" r="2.5" fill="white"/>
+        <circle cx="42" cy="64" r="1.2" fill="white" opacity="0.6"/>
+        <circle cx="64" cy="64" r="1.2" fill="white" opacity="0.6"/>
+        <!-- cejas -->
+        <path d="M34 49 Q44 44 54 48" stroke="#8B5A00" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M56 48 Q66 44 76 49" stroke="#8B5A00" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <!-- nariz -->
+        <ellipse cx="55" cy="70" rx="6" ry="4.5" fill="#c06020"/>
+        <ellipse cx="55" cy="69" rx="3.5" ry="2" fill="#e08050" opacity="0.5"/>
+        <!-- hocico claro -->
+        <ellipse cx="55" cy="77" rx="10" ry="7" fill="#fde8b0"/>
+        <!-- boca sonrisa leo -->
+        <path d="M47 77 Q55 85 63 77" stroke="#c06020" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <line x1="55" y1="74" x2="55" y2="77" stroke="#c06020" stroke-width="1.5"/>
+        <!-- patitas -->
+        <ellipse cx="38" cy="117" rx="13" ry="9" fill="#e8a84a"/>
+        <ellipse cx="72" cy="117" rx="13" ry="9" fill="#e8a84a"/>
+        <!-- estrellita en mano -->
+        <text x="82" y="108" font-size="14">⭐</text>
+      </svg>
+    </div>
+
+    <div class="title-cloud">
+      <h1>¡Nos Bautizamos!</h1>
+      <div class="names">Luca & Noah 🐻🦁</div>
+      <div class="subtitle">Y queremos que estés ahí 🙏🌿</div>
+    </div>
+
+    <div class="tap-hint">✨ Toca para continuar ✨</div>
+  </div>
+</div>
+
+<!-- =========== SLIDE 2 =========== -->
+<div class="slide" id="s2">
+  <span class="leaf">🌿</span>
+  <span class="leaf">🍃</span>
+  <span class="leaf">🌱</span>
+  <span class="leaf">🍀</span>
+
+  <div class="s2-header">¡Hola! Somos Luca y Noah 🌿</div>
+
+  <div class="babies-row">
+    <!-- Luca: bebé cara redondita sonriente (jersey blanco de ref) -->
+    <div class="baby-card">
+      <div class="speech">¡Yo siempre<br>estoy sonriendo! 😊</div>
+      <svg class="baby-svg" viewBox="0 0 148 165" xmlns="http://www.w3.org/2000/svg">
+        <!-- orejas de oso encima -->
+        <circle cx="30" cy="38" r="14" fill="#d4956a"/>
+        <circle cx="30" cy="38" r="8" fill="#c07a50"/>
+        <circle cx="118" cy="38" r="14" fill="#d4956a"/>
+        <circle cx="118" cy="38" r="8" fill="#c07a50"/>
+        <!-- cuerpo bebé con pijama de animalito -->
+        <ellipse cx="74" cy="130" rx="42" ry="30" fill="#b8d8f8"/>
+        <rect x="34" y="112" width="80" height="32" rx="14" fill="#b8d8f8"/>
+        <!-- cremallera decorativa -->
+        <line x1="74" y1="112" x2="74" y2="140" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-dasharray="3,3"/>
+        <!-- círculos cute pijama -->
+        <circle cx="52" cy="124" r="4" fill="rgba(255,255,255,0.4)"/>
+        <circle cx="96" cy="124" r="4" fill="rgba(255,255,255,0.4)"/>
+        <circle cx="60" cy="136" r="3" fill="rgba(255,255,255,0.3)"/>
+        <circle cx="88" cy="136" r="3" fill="rgba(255,255,255,0.3)"/>
+        <!-- piernitas -->
+        <ellipse cx="54" cy="150" rx="16" ry="12" fill="#9ac4e8"/>
+        <ellipse cx="94" cy="150" rx="16" ry="12" fill="#9ac4e8"/>
+        <!-- piecitos -->
+        <ellipse cx="50" cy="160" rx="14" ry="8" fill="#d4956a"/>
+        <ellipse cx="98" cy="160" rx="14" ry="8" fill="#d4956a"/>
+        <!-- bracitos -->
+        <ellipse cx="20" cy="120" rx="12" ry="18" fill="#b8d8f8" transform="rotate(-20,20,120)"/>
+        <ellipse cx="128" cy="120" rx="12" ry="18" fill="#b8d8f8" transform="rotate(20,128,120)"/>
+        <circle cx="15" cy="112" r="10" fill="#d4956a"/>
+        <circle cx="133" cy="112" r="10" fill="#d4956a"/>
+        <!-- cabeza grande Disney -->
+        <ellipse cx="74" cy="72" rx="46" ry="50" fill="#D4A574"/>
+        <!-- highlight frente -->
+        <ellipse cx="66" cy="42" rx="20" ry="12" fill="rgba(255,255,255,0.15)" transform="rotate(-10,66,42)"/>
+        <!-- cabello oscuro suave -->
+        <ellipse cx="74" cy="30" rx="44" ry="20" fill="#2a1a0a"/>
+        <rect x="30" y="30" width="88" height="24" fill="#2a1a0a" rx="8"/>
+        <!-- mechas suaves -->
+        <ellipse cx="40" cy="50" rx="12" ry="8" fill="#2a1a0a"/>
+        <ellipse cx="108" cy="50" rx="12" ry="8" fill="#2a1a0a"/>
+        <!-- cachetes -->
+        <ellipse cx="40" cy="82" rx="13" ry="9" fill="#FFB3C6" opacity="0.6"/>
+        <ellipse cx="108" cy="82" rx="13" ry="9" fill="#FFB3C6" opacity="0.6"/>
+        <!-- OJOS GRANDES DISNEY estilo soft -->
+        <!-- ojo izq -->
+        <ellipse cx="56" cy="70" rx="15" ry="17" fill="white"/>
+        <ellipse cx="56" cy="72" rx="10" ry="12" fill="#7a4a1a"/>
+        <ellipse cx="56" cy="73" rx="6" ry="7.5" fill="#1a0800"/>
+        <circle cx="60" cy="66" r="3.5" fill="white"/>
+        <circle cx="53" cy="73" r="1.5" fill="white" opacity="0.6"/>
+        <!-- ojo der -->
+        <ellipse cx="92" cy="70" rx="15" ry="17" fill="white"/>
+        <ellipse cx="92" cy="72" rx="10" ry="12" fill="#7a4a1a"/>
+        <ellipse cx="92" cy="73" rx="6" ry="7.5" fill="#1a0800"/>
+        <circle cx="96" cy="66" r="3.5" fill="white"/>
+        <circle cx="89" cy="73" r="1.5" fill="white" opacity="0.6"/>
+        <!-- pestañas suaves -->
+        <path d="M42 56 Q44 52 47 54" stroke="#2a1a0a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M56 54 Q58 50 61 52" stroke="#2a1a0a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M67 54 Q69 50 71 53" stroke="#2a1a0a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M79 54 Q81 50 84 52" stroke="#2a1a0a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M93 54 Q96 50 99 53" stroke="#2a1a0a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M103 56 Q107 52 109 55" stroke="#2a1a0a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <!-- cejas suaves arqueadas -->
+        <path d="M42 57 Q56 51 68 57" stroke="#5a3010" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M80 57 Q92 51 106 57" stroke="#5a3010" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- nariz pequeña -->
+        <ellipse cx="74" cy="86" rx="7" ry="5.5" fill="#C4906A"/>
+        <circle cx="70" cy="87" r="2.2" fill="#a87050"/>
+        <circle cx="78" cy="87" r="2.2" fill="#a87050"/>
+        <!-- boca sonrisa tierna -->
+        <path d="M60 96 Q74 108 88 96" stroke="#8B5A2B" stroke-width="2.5" fill="#FFB3A0" stroke-linecap="round"/>
+        <!-- cachete bebe abajo nariz -->
+        <ellipse cx="74" cy="102" rx="8" ry="4" fill="rgba(255,200,180,0.4)"/>
+      </svg>
+      <div class="name-tag">🐻 Luca</div>
+    </div>
+
+    <!-- Noah: cara más seria/curiosa, bracito levantado -->
+    <div class="baby-card">
+      <div class="speech">¡Yo lo analizo<br>todo! 🤔✨</div>
+      <svg class="baby-svg" viewBox="0 0 148 165" xmlns="http://www.w3.org/2000/svg">
+        <!-- orejitas de leoncito -->
+        <ellipse cx="28" cy="36" rx="15" ry="18" fill="#e8a84a"/>
+        <ellipse cx="28" cy="36" rx="9" ry="11" fill="#dfa040"/>
+        <ellipse cx="120" cy="36" rx="15" ry="18" fill="#e8a84a"/>
+        <ellipse cx="120" cy="36" rx="9" ry="11" fill="#dfa040"/>
+        <!-- cuerpo pijama verde suave -->
+        <ellipse cx="74" cy="130" rx="42" ry="30" fill="#b8e8c0"/>
+        <rect x="34" y="112" width="80" height="32" rx="14" fill="#b8e8c0"/>
+        <line x1="74" y1="112" x2="74" y2="140" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-dasharray="3,3"/>
+        <circle cx="52" cy="124" r="4" fill="rgba(255,255,255,0.4)"/>
+        <circle cx="96" cy="124" r="4" fill="rgba(255,255,255,0.4)"/>
+        <circle cx="60" cy="136" r="3" fill="rgba(255,255,255,0.3)"/>
+        <circle cx="88" cy="136" r="3" fill="rgba(255,255,255,0.3)"/>
+        <!-- piernitas -->
+        <ellipse cx="54" cy="150" rx="16" ry="12" fill="#98d8a8"/>
+        <ellipse cx="94" cy="150" rx="16" ry="12" fill="#98d8a8"/>
+        <ellipse cx="50" cy="160" rx="14" ry="8" fill="#d4a574"/>
+        <ellipse cx="98" cy="160" rx="14" ry="8" fill="#d4a574"/>
+        <!-- brazo derecho levantado -->
+        <ellipse cx="130" cy="105" rx="12" ry="20" fill="#b8e8c0" transform="rotate(30,130,105)"/>
+        <circle cx="138" cy="94" r="11" fill="#d4a574"/>
+        <!-- brazo izq -->
+        <ellipse cx="18" cy="120" rx="12" ry="18" fill="#b8e8c0" transform="rotate(-15,18,120)"/>
+        <circle cx="13" cy="113" r="10" fill="#d4a574"/>
+        <!-- cabeza -->
+        <ellipse cx="74" cy="72" rx="46" ry="50" fill="#D4A574"/>
+        <ellipse cx="66" cy="42" rx="20" ry="12" fill="rgba(255,255,255,0.13)" transform="rotate(-10,66,42)"/>
+        <!-- cabello -->
+        <ellipse cx="74" cy="28" rx="44" ry="20" fill="#1a0e04"/>
+        <rect x="30" y="28" width="88" height="26" fill="#1a0e04" rx="8"/>
+        <ellipse cx="38" cy="52" rx="14" ry="9" fill="#1a0e04"/>
+        <ellipse cx="110" cy="52" rx="14" ry="9" fill="#1a0e04"/>
+        <!-- cachetes -->
+        <ellipse cx="40" cy="82" rx="13" ry="9" fill="#FFB3C6" opacity="0.6"/>
+        <ellipse cx="108" cy="82" rx="13" ry="9" fill="#FFB3C6" opacity="0.6"/>
+        <!-- OJOS grandes muy abiertos curiosos -->
+        <ellipse cx="56" cy="68" rx="16" ry="19" fill="white"/>
+        <ellipse cx="92" cy="68" rx="16" ry="19" fill="white"/>
+        <ellipse cx="56" cy="70" rx="11" ry="13" fill="#5a3010"/>
+        <ellipse cx="92" cy="70" rx="11" ry="13" fill="#5a3010"/>
+        <ellipse cx="56" cy="71" rx="7" ry="8.5" fill="#0d0500"/>
+        <ellipse cx="92" cy="71" rx="7" ry="8.5" fill="#0d0500"/>
+        <circle cx="61" cy="64" r="4" fill="white"/>
+        <circle cx="97" cy="64" r="4" fill="white"/>
+        <circle cx="53" cy="72" r="1.5" fill="white" opacity="0.5"/>
+        <circle cx="89" cy="72" r="1.5" fill="white" opacity="0.5"/>
+        <!-- cejas un poco levantadas (curioso) -->
+        <path d="M40 52 Q56 46 70 52" stroke="#3a1a00" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+        <path d="M78 52 Q92 46 108 52" stroke="#3a1a00" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+        <!-- nariz -->
+        <ellipse cx="74" cy="85" rx="7" ry="5.5" fill="#C4906A"/>
+        <circle cx="70" cy="86" r="2.2" fill="#a87050"/>
+        <circle cx="78" cy="86" r="2.2" fill="#a87050"/>
+        <!-- boca seria pero tierna -->
+        <path d="M63 95 Q74 103 85 95" stroke="#8B5A2B" stroke-width="2.5" fill="#FFB3A0" stroke-linecap="round"/>
+        <!-- estrellita cerca del bracito -->
+        <text x="128" y="86" font-size="16">⭐</text>
+      </svg>
+      <div class="name-tag">🦁 Noah</div>
+    </div>
+  </div>
+
+  <div class="s2-footer">
+    <h2>¡Llegamos a este mundo! 🌿</h2>
+    <div class="emoji-strip">🌸 🐾 🌸</div>
+  </div>
+</div>
+
+<!-- =========== SLIDE 3 =========== -->
+<div class="slide" id="s3">
+  <div class="invite-card">
+    <div class="card-top-deco">🕊️</div>
+    <h2>¡Estás invitado! 🌿</h2>
+
+    <div class="info-item">
+      <div class="ii-icon">⛪</div>
+      <div class="ii-text">
+        <strong>Ceremonia de Bautizo</strong>
+        Capilla Nuestra Señora del Carmen<br>
+        <b>Viernes 16 de mayo · 10:00 a.m.</b>
+      </div>
+    </div>
+
+    <div class="info-item">
+      <div class="ii-icon">🍽️</div>
+      <div class="ii-text">
+        <strong>Comida de Celebración</strong>
+        Hyatt<br>
+        <b>1:00 p.m.</b> — ¡Habrá de todo! 😋
+      </div>
+    </div>
+
+    <div class="info-item">
+      <div class="ii-icon">🐻🦁</div>
+      <div class="ii-text">
+        <strong>Aviso importante</strong>
+        Luca y Noah prometen portarse bien…<br>
+        <i>*el 16 de mayo lo veremos* 😂</i>
+      </div>
+    </div>
+
+    <button class="cta-btn" onclick="goTo(3)">¡Con mucho gusto! 🌿🎉</button>
+  </div>
+</div>
+
+<!-- =========== SLIDE 4 =========== -->
+<div class="slide" id="s4">
+  <div id="confetti-box"></div>
+  <div class="final-wrap">
+    <div class="final-animals">🐻🕊️🦁</div>
+    <h1>¡Gracias por<br>acompañarnos!</h1>
+    <div class="names-big">Luca & Noah</div>
+    <div class="message">
+      Con todo el amor del mundo<br>
+      los esperamos el <b>16 de mayo</b> 🌿✨
+    </div>
+    <div class="hearts-row">💛🤍💚</div>
+    <div class="final-details">
+      ⛪ Capilla Nuestra Señora del Carmen · 10:00 a.m.<br>
+      🍽️ Comida en el Hyatt · 1:00 p.m.
+    </div>
+  </div>
+</div>
+
+<!-- Nav -->
+<div id="nav">
+  <div class="dot on" onclick="goTo(0)"></div>
+  <div class="dot" onclick="goTo(1)"></div>
+  <div class="dot" onclick="goTo(2)"></div>
+  <div class="dot" onclick="goTo(3)"></div>
+</div>
+<button id="nxt-btn" onclick="nextSlide()">Siguiente →</button>
+
+</div>
+
+<script>
+let cur = 0;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+const nxt = document.getElementById('nxt-btn');
+
+function goTo(n) {
+  slides[cur].classList.remove('active');
+  dots[cur].classList.remove('on');
+  cur = n;
+  slides[cur].classList.add('active');
+  dots[cur].classList.add('on');
+  nxt.textContent = cur === slides.length - 1 ? '¡Volver! 🔄' : 'Siguiente →';
+  if (cur === 3) spawnConfetti();
+}
+function nextSlide() { goTo((cur + 1) % slides.length); }
+
+document.getElementById('scene').addEventListener('click', function(e) {
+  if (e.target.closest('#nav') || e.target.id === 'nxt-btn' || e.target.closest('.cta-btn')) return;
+  nextSlide();
+});
+
+function spawnConfetti() {
+  const box = document.getElementById('confetti-box');
+  box.innerHTML = '';
+  const colors = ['#FFD700','#7ab648','#e8956d','#b8e8c0','#FFB3C6','#b8d8f8','#fde8b0'];
+  for (let i = 0; i < 50; i++) {
+    const el = document.createElement('div');
+    el.className = 'cp';
+    const s = 6 + Math.random() * 9;
+    el.style.cssText = `
+      left:${Math.random()*100}%;
+      width:${s}px; height:${s}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      border-radius:${Math.random()>.5?'50%':'3px'};
+      animation-duration:${2+Math.random()*3}s;
+      animation-delay:${Math.random()*2}s;
+      --dx:${(Math.random()-.5)*110}px;
+    `;
+    box.appendChild(el);
+  }
+}
+
+// Avance automático
+let t = setInterval(() => { if (cur < slides.length-1) nextSlide(); else clearInterval(t); }, 4500);
+</script>
+</body>
+</html>
